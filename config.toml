@@ -1,0 +1,13 @@
+[311]
+host = "http://fatelastic.als:9200"
+
+[minio]
+host = "minio311.altus.cr:9000"
+accessKeyID = "AEOGIPPN8OWU8691TVWV"
+secretAccessKey = "dzmUzA71zaFc6Si51wOY6cQlijmgZ/MSOZLNL3S9"
+
+[s3]
+region = "us-west-2"
+
+[server]
+port = 9090

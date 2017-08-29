@@ -1,0 +1,297 @@
+swagger: "2.0"
+info:
+  description: "This is an API destinated for events CRUD operations of Smart Cities application."
+  version: "1.0.0"
+  title: "Open311 API"
+schemes:
+  - http
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /ping:
+    get:
+      description: Ping
+      responses:
+        200:
+          description: Success
+          schema:
+            type: string
+  /images:
+    get:
+      description: Gets a Link URL to acces the desired image
+      operationID: getImage
+      tags:
+      - Images
+      responses:
+        200:
+          description: Success
+          schema:
+            type: string
+        404:
+          description: Object not found
+          schema:
+            type: string
+        400:
+          description: Bad request
+          schema:
+            type: string
+      parameters:
+      - name: bucketName
+        in: query
+        type: string
+        required: true
+        description: Bucket where the image is stored
+      - name: objectName
+        in: query
+        type: string
+        required: true
+        description: Name of the image file
+    put:
+      description: Send image to be stored
+      operationId: postImage
+      tags:
+        - Images
+      parameters:
+        - in: body
+          name: body
+          description: Image model with the information required for its storage
+          required: true
+          schema:
+            $ref: '#/definitions/Image'
+      responses:
+        200:
+          description: success
+          schema:
+            type: string
+        400:
+          description: bad Json
+          schema:
+            type: string
+  /requests:
+    post:
+      description: create a new report request
+      operationID: postRequest
+      tags:
+        - Requests
+      parameters:
+        - in: body
+          name: body
+          description: Report to be created
+          required: true
+          schema:
+            $ref: '#/definitions/Request'
+      responses:
+        200:
+          description: Success
+          schema:
+            type: string
+        400:
+          description: Bad Json
+          schema:
+            type: string
+        500:
+          description: Internal server error
+          schema:
+            type: string
+    get:
+      description: Get a list of reports available
+      operationID: getServiceRequests
+      tags:
+        - Requests
+      responses:
+        200:
+          description: Success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Request'
+        500:
+          description: Internal server error
+          type: string
+        400:
+          description: Bad request
+          type: string
+  /requests/{service_request_id}:
+    get:
+      description: Get a report request by its ID
+      operationID: getServiceRequestByID
+      tags:
+        - Requests
+      parameters:
+        - in: path
+          name: service_request_id
+          description: the ID of the request to search
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/Request'
+        400:
+          description: Bad Request
+          type: string
+        500:
+          description: Internal server error
+          type: string
+  /services:
+    get:
+      description: Get a list of the available services types
+      operationID: getServiceList
+      tags:
+        - Services
+      responses:
+        200:
+          description: Success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Service'
+        500:
+          description: Internal server error
+          type: string
+  /services/{service_code}:
+    get:
+      description: Get a service definition info by its service code
+      operationID: getServiceDefinition
+      tags:
+        - Services
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/ServiceDefinition'
+        500:
+          description: Internal server error
+          type: string
+        404:
+          description: Item not found
+          type: string
+definitions:
+  Image:
+    type: object
+    properties:
+      BucketName:
+        type: string
+      ObjectName:
+        type: string
+      Image:
+       type: string
+  Request:
+    type: object
+    properties:
+      ID:
+        type: string
+      JurisdictionID:
+        type: string
+      ServiceCode:
+        type: string
+      Location:
+        $ref: '#/definitions/Location'
+      Attributes:
+        type: array
+        items:
+          $ref: '#/definitions/Attributes'
+      AddressString:
+        type: string
+      AddressID:
+        type: string
+      Email:
+        type: string
+      DeviceID:
+        type: string
+      AccountID:
+        type: string
+      FirstName:
+        type: string
+      LastName:
+        type: string
+      Phone:
+        type: string
+      Description:
+        type: string
+      MediaURL:
+        type: string
+      Status:
+        type: string
+      StatusNotes:
+        type: string
+      ServiceName:
+        type: string
+      AgencyResponsible:
+        type: string
+      ServiceNotice:
+        type: string
+      RequestedDateTime:
+        type: string
+        format: date
+      UpdatedDateTime:
+        type: string
+        format: date
+      ExpectedDateTime:
+        type: string
+        format: date
+      ZipCode:
+        type: string
+  Location:
+        type: object
+        properties:
+          Lat:
+            type: number
+            format: float
+          Lon:
+            type: number
+            format: float
+  ServiceDefinition:
+    type: object
+    properties:
+      JurisdictionID:
+        type: string
+      ServiceCode:
+        type: string
+      Variable:
+        type: boolean
+      DataType:
+        type: string
+      Required:
+        type: boolean
+      DataTypeDescription:
+        type: string
+      Order:
+        type: number
+        format: int32
+      AttributeDescription:
+        type: string
+      Value:
+        type: array
+        items:
+          $ref: "#/definitions/Attributes"
+  Attributes:
+        type: object
+        properties:
+          Code:
+            type: string
+          Value:
+            type: string  
+  Service:
+    type: object
+    properties:
+      ID:
+        type: string
+      JurisdictionID:
+        type: string
+      ServiceName:
+        type: string
+      Description:
+        type: string
+      Metadata:
+        type: boolean
+      Type:
+        type: string
+      Keywords:
+        type: string
+      Group:
+        type: string
