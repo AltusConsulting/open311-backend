@@ -1,10 +1,10 @@
 # open311-backend
 
-This is a backend to create reports from the [Smart Cities](https://gitlab.priv.als/witcher/Smart_Cities/commits/open-source) application
+This is a backend to create reports from the [Smart Cities](https://github.com/AltusConsulting/smart-cities) application
 
 ## Getting Started
 
-To start using this project first you must install [Golang] (https://golang.org/dl/). 
+To start using this project first you must install [Golang](https://golang.org/dl/). 
 
 
 ### Prerequisites
@@ -67,7 +67,7 @@ This is the initial version We use [SemVer](http://semver.org/) for versioning.
 
 ## Authors
 
-* [Altus Consulting Software Team] (https://github.com/AltusConsulting)
+* [Altus Consulting Software Team](https://github.com/AltusConsulting)
 
 ## License
 
